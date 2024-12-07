@@ -3,57 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BasilVerse - Cheat Loader</title>
+    <title>BasilVerse - Secret Neighbor</title>
+
     <style>
-        /* Global Styles */
+        /* Global styles */
         body {
             font-family: 'Arial', sans-serif;
+            background: #121212;
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1d1d1d;
-            position: relative;
             overflow: hidden;
-            animation: fadeIn 1s ease-out;
+            transition: all 0.3s ease;
         }
 
-        /* Main container */
+        /* Container for the content */
         .container {
             text-align: center;
             max-width: 600px;
             width: 100%;
             padding: 30px;
+            border: 1px solid #444;
             border-radius: 10px;
-            background: rgba(20, 20, 20, 0.9);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            background: #1e1e1e;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.5s ease;
             opacity: 0;
             transform: translateY(-30px);
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            z-index: 10;
-            position: relative;
         }
 
-        /* Title */
+        /* Heading styles */
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
+            letter-spacing: 2px;
             color: #00d4ff;
-            letter-spacing: 1px;
-            margin-top: 0;
+            animation: fadeIn 1s ease-in-out forwards;
         }
 
-        /* Status Text */
+        /* Status text */
         p {
             font-size: 1.3em;
             font-weight: bold;
             color: #bbb;
             margin-bottom: 30px;
+            transition: color 0.3s ease;
         }
 
-        /* Button Styles */
+        /* IMGUI-like button style */
         .button {
             background: #0072ff;
             border: none;
@@ -62,125 +63,51 @@
             font-size: 1.1em;
             color: #fff;
             cursor: pointer;
+            transition: transform 0.2s ease-in-out;
             margin: 10px;
-            transition: transform 0.2s ease-in-out, background-color 0.3s;
         }
 
         .button:hover {
-            transform: scale(1.05);
-            background-color: #0058c7;
+            transform: scale(1.1);
         }
 
-        /* Settings Icon */
-        .settings-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background-color: #ff7f50;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            color: #fff;
-            font-size: 1.5em;
-        }
-
-        /* Settings Menu */
-        .settings-menu {
-            position: absolute;
-            top: 70px;
-            right: 20px;
-            width: 300px;
-            background: rgba(25, 25, 25, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            display: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease-in-out;
-            z-index: 20;
-        }
-
-        .settings-menu input[type="range"] {
-            width: 100%;
-        }
-
-        /* Color Picker */
-        .color-picker {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .rainbow-box {
-            width: 150px;
-            height: 30px;
-            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-            border-radius: 5px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .color-circle {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .apply-button {
-            background: #0072ff;
-            padding: 10px;
-            border-radius: 5px;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .apply-button:hover {
-            background: #0058c7;
-        }
-
-        /* Animation Options */
-        .animation-options {
-            margin-top: 15px;
-        }
-
-        .animation-options label {
-            font-size: 1.1em;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        /* Particle Animation */
-        .particle {
-            position: absolute;
-            top: -10px;
-            background-color: white;
-            width: 2px;
-            height: 10px;
-            animation: fall 5s infinite;
-        }
-
-        @keyframes fall {
+        /* Animation when the page loads */
+        @keyframes fadeIn {
             0% {
-                transform: translateY(0);
+                opacity: 0;
+                transform: translateY(-30px);
             }
             100% {
-                transform: translateY(100vh);
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Modal for details */
+        /* Scroll animation */
+        @keyframes scrollAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply scroll animation */
+        .container.scrolled {
+            animation: scrollAnimation 1s ease-out forwards;
+        }
+
+        /* Loading animation */
+        .loading {
+            font-size: 1.5em;
+            color: #ffcb00;
+            margin: 10px 0;
+        }
+
+        /* Modal/Details Page styling */
         .modal {
             position: fixed;
             top: 0;
@@ -191,7 +118,6 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 30;
         }
 
         .modal-content {
@@ -230,172 +156,63 @@
             background: #ff3333;
         }
 
-        /* Smooth fade-in animation */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Additional Animation Effects */
-        @keyframes rotate360 {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Additional Background Effects */
-        .background-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 5;
-            opacity: 0.5;
-            animation: rotate360 20s linear infinite;
-        }
-
-        .particle-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Add scrolling effect */
-        .scrolling-text {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            font-size: 1.2em;
-            color: #fff;
-            animation: scrollText 10s linear infinite;
-        }
-
-        @keyframes scrollText {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
     </style>
 </head>
 <body>
-    <!-- Background Overlays and Effects -->
-    <div class="background-overlay"></div>
-    <div class="particle-container" id="particles"></div>
-
-    <!-- Main Container -->
     <div class="container">
-        <h1>BasilVerse - Cheat Loader</h1>
+        <h1>BasilVerse - Secret Neighbor</h1>
         <p id="status">Checking...</p>
-        <button class="button" onclick="reloadStatus();">Reload Status</button>
+        <button class="button" onclick="location.reload();">Reload Status</button>
         <button class="button" onclick="showDetails();">Details</button>
-        <button class="button" onclick="toggleAnimations();">Toggle Animations</button>
     </div>
 
-    <!-- Settings Icon -->
-    <div class="settings-icon" onclick="toggleSettingsMenu()">⚙</div>
-
-    <!-- Settings Menu -->
-    <div class="settings-menu">
-        <div class="color-picker">
-            <div class="rainbow-box" onclick="openColorPicker();">
-                <div class="color-circle" id="color-circle"></div>
-            </div>
-            <button class="apply-button" onclick="applyColor();">Apply Color</button>
-        </div>
-
-        <div class="animation-options">
-            <label>Adjust Transparency:</label>
-            <input type="range" min="0" max="1" step="0.1" value="1" onchange="adjustTransparency(this.value);">
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal" id="detailsModal">
+    <!-- Modal for details -->
+    <div id="detailsModal" class="modal">
         <div class="modal-content">
-            <h2>Cheat Loader Details</h2>
-            <p>This is a custom cheat loader for the BasilVerse platform. It supports various features including status reload, color changes, and animation toggles.</p>
+            <h2>Welcome To JimmyVerse SN</h2>
+            <p>JimmyVerse is the newest and probably most usable one out there next to Harley Sulivan. It is worth the money and doesn't take down and knock of performance like other hacks.</p>
+            <p>If servers are down and launching doesn't work, it might be a database error or hack revamp.</p>
+            <p><strong>Love from Basil (aka Jimmy Gonsen)</strong></p>
             <button class="close-button" onclick="closeDetails();">Close</button>
         </div>
     </div>
 
-    <div class="scrolling-text">Welcome to BasilVerse - the ultimate cheat experience.</div>
-
     <script>
-        // JavaScript Functions
-        let isSettingsMenuVisible = false;
-        let areAnimationsEnabled = true;
+        // Check server status
+        fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.content) {
+                    const decodedContent = atob(data.content);
+                    const status = JSON.parse(decodedContent);
+                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
+                    document.getElementById('status').textContent = statusText;
 
-        // Toggle the settings menu visibility
-        function toggleSettingsMenu() {
-            isSettingsMenuVisible = !isSettingsMenuVisible;
-            document.querySelector('.settings-menu').style.display = isSettingsMenuVisible ? 'block' : 'none';
+                    // Add class to animate the content
+                    document.querySelector('.container').classList.add('scrolled');
+                }
+            })
+            .catch(() => {
+                document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
+                document.querySelector('.container').classList.add('scrolled');
+            });
+
+        // Trigger scroll animation once the page is loaded
+        window.onload = () => {
+            setTimeout(() => {
+                document.querySelector('.container').classList.add('scrolled');
+            }, 200);
         }
 
-        // Toggle animations
-        function toggleAnimations() {
-            areAnimationsEnabled = !areAnimationsEnabled;
-            document.querySelector('.background-overlay').style.animationPlayState = areAnimationsEnabled ? 'running' : 'paused';
-            document.querySelector('.scrolling-text').style.animationPlayState = areAnimationsEnabled ? 'running' : 'paused';
-        }
-
-        // Show details modal
+        // Function to show the Details modal
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Close details modal
+        // Function to close the Details modal
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
         }
-
-        // Reload status
-        function reloadStatus() {
-            document.getElementById('status').innerText = "Status reloaded successfully!";
-        }
-
-        // Apply new background color
-        function applyColor() {
-            const color = document.getElementById('color-circle').style.backgroundColor;
-            document.body.style.backgroundColor = color;
-        }
-
-        // Adjust transparency of the background
-        function adjustTransparency(value) {
-            document.querySelector('.container').style.opacity = value;
-        }
-
-        // Particle Animation
-        function createParticles() {
-            for (let i = 0; i < 10; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                document.getElementById('particles').appendChild(particle);
-            }
-        }
-
-        // Initial call to create particles
-        createParticles();
     </script>
 </body>
 </html>
