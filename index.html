@@ -3,25 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JimmyVerse Server Status</title>
+    <title>BasilVerse - Secret Neighbor</title>
+
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Container for the content */
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #00d4ff;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        /* Status text */
+        p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #bbb;
+            margin-bottom: 30px;
+            transition: color 0.3s ease;
+        }
+
+        /* IMGUI-like button style */
+        .button {
+            background: #0072ff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animation when the page loads */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll animation */
+        @keyframes scrollAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply scroll animation */
+        .container.scrolled {
+            animation: scrollAnimation 1s ease-out forwards;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Server Status [Secret Neighbor]</h1>
-    <p id="status">Checking...</p>
+    <div class="container">
+        <h1>BasilVerse - Secret Neighbor</h1>
+        <p id="status">Checking...</p>
+        <button class="button" onclick="location.reload();">Reload Status</button>
+    </div>
 
     <script>
+        // Check server status
         fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
             .then(response => response.json())
             .then(data => {
                 if (data && data.content) {
                     const decodedContent = atob(data.content);
                     const status = JSON.parse(decodedContent);
-                    document.getElementById('status').textContent = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
+                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
+                    document.getElementById('status').textContent = statusText;
+
+                    // Add class to animate the content
+                    document.querySelector('.container').classList.add('scrolled');
                 }
             })
             .catch(() => {
                 document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
+                document.querySelector('.container').classList.add('scrolled');
             });
+
+        // Trigger scroll animation once the page is loaded
+        window.onload = () => {
+            setTimeout(() => {
+                document.querySelector('.container').classList.add('scrolled');
+            }, 200);
+        }
     </script>
 </body>
 </html>
