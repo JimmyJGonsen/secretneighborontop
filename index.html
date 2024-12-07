@@ -9,7 +9,7 @@
         /* Global styles */
         body {
             font-family: 'Arial', sans-serif;
-            background: #121212;
+            background: #0a0a0a;
             color: #fff;
             margin: 0;
             padding: 0;
@@ -18,64 +18,65 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
         /* Container for the content */
         .container {
             text-align: center;
-            max-width: 600px;
             width: 100%;
+            max-width: 500px;
             padding: 30px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background: #1e1e1e;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-            transition: transform 0.5s ease;
-            opacity: 0;
-            transform: translateY(-30px);
+            border: 1px solid #333;
+            border-radius: 12px;
+            background: #1d1d1d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+            transition: transform 0.3s ease-in-out;
         }
 
         /* Heading styles */
         h1 {
             font-size: 2.5em;
+            color: #00d4ff;
             margin-bottom: 20px;
             letter-spacing: 2px;
-            color: #00d4ff;
-            animation: fadeIn 1s ease-in-out forwards;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         /* Status text */
         p {
-            font-size: 1.3em;
-            font-weight: bold;
+            font-size: 1.2em;
             color: #bbb;
-            margin-bottom: 30px;
-            transition: color 0.3s ease;
+            margin-bottom: 25px;
+            font-weight: bold;
         }
 
-        /* IMGUI-like button style */
+        /* Hack-style button */
         .button {
-            background: #0072ff;
+            background: linear-gradient(90deg, #3f7ef1, #3c56f1);
             border: none;
-            padding: 15px 30px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 6px;
             font-size: 1.1em;
             color: #fff;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
             margin: 10px;
+            width: 100%;
+            text-transform: uppercase;
         }
 
         .button:hover {
-            transform: scale(1.1);
+            background: linear-gradient(90deg, #4b8aff, #3c56f1);
+            transform: scale(1.05);
         }
 
         /* Animation when the page loads */
         @keyframes fadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-20px);
             }
             100% {
                 opacity: 1;
@@ -83,84 +84,62 @@
             }
         }
 
-        /* Scroll animation */
-        @keyframes scrollAnimation {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .container {
+            animation: fadeIn 0.7s ease-out forwards;
         }
 
-        /* Apply scroll animation */
-        .container.scrolled {
-            animation: scrollAnimation 1s ease-out forwards;
-        }
-
-        /* Loading animation */
-        .loading {
-            font-size: 1.5em;
-            color: #ffcb00;
-            margin: 10px 0;
-        }
-
-        /* Modal/Details Page styling */
+        /* Modal styling */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background: #1e1e1e;
+            background: #1d1d1d;
             color: #fff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             width: 90%;
             max-width: 600px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
         }
 
         .modal-content h2 {
-            margin-bottom: 20px;
             color: #00d4ff;
-        }
-
-        .modal-content p {
-            color: #bbb;
-            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
 
         .close-button {
             background: #ff4444;
             border: none;
             padding: 10px 20px;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #fff;
             cursor: pointer;
             border-radius: 5px;
             margin-top: 20px;
+            transition: all 0.2s ease-in-out;
         }
 
         .close-button:hover {
             background: #ff3333;
+            transform: scale(1.1);
         }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>BasilVerse - Secret Neighbor</h1>
+        <h1>BasilVerse</h1>
         <p id="status">Checking...</p>
         <button class="button" onclick="location.reload();">Reload Status</button>
         <button class="button" onclick="showDetails();">Details</button>
@@ -169,10 +148,10 @@
     <!-- Modal for details -->
     <div id="detailsModal" class="modal">
         <div class="modal-content">
-            <h2>Welcome To JimmyVerse SN</h2>
-            <p>JimmyVerse is the newest and probably most usable one out there next to Harley Sulivan. It is worth the money and doesn't take down and knock of performance like other hacks.</p>
-            <p>If servers are down and launching doesn't work, it might be a database error or hack revamp.</p>
-            <p><strong>Love from Basil (aka Jimmy Gonsen)</strong></p>
+            <h2>Welcome to BasilVerse</h2>
+            <p>JimmyVerse is the newest and most reliable hack around. Minimal performance impact, maximum effectiveness.</p>
+            <p>Note: If servers are down, it may be due to updates or a revamp.</p>
+            <p><strong>Created by: Jimmy Gonsen</strong></p>
             <button class="close-button" onclick="closeDetails();">Close</button>
         </div>
     </div>
@@ -185,31 +164,20 @@
                 if (data && data.content) {
                     const decodedContent = atob(data.content);
                     const status = JSON.parse(decodedContent);
-                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
+                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Servers are down. Try again later.';
                     document.getElementById('status').textContent = statusText;
-
-                    // Add class to animate the content
-                    document.querySelector('.container').classList.add('scrolled');
                 }
             })
             .catch(() => {
                 document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
-                document.querySelector('.container').classList.add('scrolled');
             });
 
-        // Trigger scroll animation once the page is loaded
-        window.onload = () => {
-            setTimeout(() => {
-                document.querySelector('.container').classList.add('scrolled');
-            }, 200);
-        }
-
-        // Function to show the Details modal
+        // Show modal
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Function to close the Details modal
+        // Close modal
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
         }
