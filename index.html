@@ -18,65 +18,62 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         /* Container for the content */
         .container {
             text-align: center;
+            max-width: 400px;
             width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            border: 1px solid #333;
-            border-radius: 12px;
-            background: #1d1d1d;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
-            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #121212;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease;
         }
 
         /* Heading styles */
         h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
             color: #00d4ff;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-transform: uppercase;
         }
 
         /* Status text */
         p {
             font-size: 1.2em;
-            color: #bbb;
-            margin-bottom: 25px;
             font-weight: bold;
+            color: #bbb;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
         }
 
-        /* Hack-style button */
+        /* IMGUI-like button style */
         .button {
-            background: linear-gradient(90deg, #3f7ef1, #3c56f1);
+            background: #0072ff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 5px;
             font-size: 1.1em;
             color: #fff;
-            font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: background 0.2s ease, transform 0.2s ease-in-out;
             margin: 10px;
-            width: 100%;
-            text-transform: uppercase;
         }
 
         .button:hover {
-            background: linear-gradient(90deg, #4b8aff, #3c56f1);
+            background: #0066cc;
             transform: scale(1.05);
         }
 
-        /* Animation when the page loads */
-        @keyframes fadeIn {
+        /* Animation for modal fade */
+        @keyframes modalFade {
             0% {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(50px);
             }
             100% {
                 opacity: 1;
@@ -84,11 +81,7 @@
             }
         }
 
-        .container {
-            animation: fadeIn 0.7s ease-out forwards;
-        }
-
-        /* Modal styling */
+        /* Modal Styling */
         .modal {
             position: fixed;
             top: 0;
@@ -99,22 +92,29 @@
             display: none;
             justify-content: center;
             align-items: center;
+            animation: modalFade 0.5s ease-out forwards;
         }
 
         .modal-content {
-            background: #1d1d1d;
+            background: #1e1e1e;
             color: #fff;
             padding: 20px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
         }
 
         .modal-content h2 {
+            margin-bottom: 15px;
             color: #00d4ff;
-            font-weight: 700;
+            font-size: 1.8em;
+        }
+
+        .modal-content p {
+            color: #bbb;
+            font-size: 1.2em;
             margin-bottom: 20px;
         }
 
@@ -122,24 +122,21 @@
             background: #ff4444;
             border: none;
             padding: 10px 20px;
-            font-size: 1em;
+            font-size: 1.1em;
             color: #fff;
             cursor: pointer;
             border-radius: 5px;
-            margin-top: 20px;
-            transition: all 0.2s ease-in-out;
         }
 
         .close-button:hover {
             background: #ff3333;
-            transform: scale(1.1);
         }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>BasilVerse</h1>
+        <h1>BasilVerse - Secret Neighbor</h1>
         <p id="status">Checking...</p>
         <button class="button" onclick="location.reload();">Reload Status</button>
         <button class="button" onclick="showDetails();">Details</button>
@@ -148,10 +145,10 @@
     <!-- Modal for details -->
     <div id="detailsModal" class="modal">
         <div class="modal-content">
-            <h2>Welcome to BasilVerse</h2>
-            <p>JimmyVerse is the newest and most reliable hack around. Minimal performance impact, maximum effectiveness.</p>
-            <p>Note: If servers are down, it may be due to updates or a revamp.</p>
-            <p><strong>Created by: Jimmy Gonsen</strong></p>
+            <h2>Welcome to JimmyVerse SN</h2>
+            <p>JimmyVerse is the newest and most usable cheat loader out there, designed for performance and reliability.</p>
+            <p>If the servers are down, it could be due to a database issue or a revamp of the hack.</p>
+            <p><strong>Love from Basil (aka Jimmy Gonsen)</strong></p>
             <button class="close-button" onclick="closeDetails();">Close</button>
         </div>
     </div>
@@ -164,7 +161,7 @@
                 if (data && data.content) {
                     const decodedContent = atob(data.content);
                     const status = JSON.parse(decodedContent);
-                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Servers are down. Try again later.';
+                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
                     document.getElementById('status').textContent = statusText;
                 }
             })
@@ -172,12 +169,12 @@
                 document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
             });
 
-        // Show modal
+        // Function to show the Details modal
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Close modal
+        // Function to close the Details modal
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
         }
