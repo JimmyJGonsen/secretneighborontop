@@ -111,6 +111,158 @@
         .modal {
             position: fixed;
             top: 0;
+            left: 0;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BasilVerse - Secret Neighbor</title>
+
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #121212;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 10px;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.5s ease, background 1s ease;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #00d4ff;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        /* Status text */
+        p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #bbb;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            background: #0072ff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            margin: 10px;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Settings Icon and Menu */
+        .settings-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #ff7f50;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        .settings-menu {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            width: 250px;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .settings-menu input[type="range"] {
+            width: 100%;
+        }
+
+        .color-picker {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rainbow-box {
+            width: 150px;
+            height: 30px;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .apply-button {
+            background: #008c00;
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .apply-button:hover {
+            background: #006400;
+        }
+
+        .animation-options {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .animation-options label {
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .loading {
+            font-size: 1.5em;
+            color: #ffcb00;
+            margin: 10px 0;
+        }
+
+        /* Modal for details */
+        .modal {
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
@@ -156,6 +308,18 @@
             background: #ff3333;
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -164,6 +328,27 @@
         <p id="status">Checking...</p>
         <button class="button" onclick="location.reload();">Reload Status</button>
         <button class="button" onclick="showDetails();">Details</button>
+    </div>
+
+    <!-- Settings Icon -->
+    <div class="settings-icon" onclick="toggleSettingsMenu()">⚙</div>
+
+    <!-- Settings Menu -->
+    <div class="settings-menu">
+        <div class="color-picker">
+            <div class="rainbow-box" onclick="openColorPicker();"></div>
+            <button class="apply-button" onclick="applyColor();">Apply Color</button>
+        </div>
+
+        <div class="transparency-slider">
+            <label for="transparency">Transparency</label>
+            <input type="range" id="transparency" min="0" max="1" step="0.01" value="0.9" onchange="adjustTransparency(this.value)">
+        </div>
+
+        <div class="animation-options">
+            <label><input type="checkbox" id="backgroundAnimation" /> Background Animation</label>
+            <label><input type="checkbox" id="transitionAnimation" /> Transition Animation</label>
+        </div>
     </div>
 
     <!-- Modal for details -->
@@ -187,8 +372,6 @@
                     const status = JSON.parse(decodedContent);
                     const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
                     document.getElementById('status').textContent = statusText;
-
-                    // Add class to animate the content
                     document.querySelector('.container').classList.add('scrolled');
                 }
             })
@@ -197,23 +380,38 @@
                 document.querySelector('.container').classList.add('scrolled');
             });
 
-        // Trigger scroll animation once the page is loaded
-        window.onload = () => {
-            setTimeout(() => {
-                document.querySelector('.container').classList.add('scrolled');
-            }, 200);
+        // Toggle settings menu
+        function toggleSettingsMenu() {
+            const menu = document.querySelector('.settings-menu');
+            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
         }
 
-        // Function to show the Details modal
+        // Adjust Transparency
+        function adjustTransparency(value) {
+            const container = document.querySelector('.container');
+            container.style.opacity = value;
+        }
+
+        // Apply Color
+        function openColorPicker() {
+            alert('Drag the circle on the rainbow box to select a color!');
+        }
+
+        function applyColor() {
+            const colorBox = document.querySelector('.rainbow-box');
+            const container = document.querySelector('.container');
+            container.style.backgroundColor = colorBox.style.backgroundColor || 'black'; // Sample
+        }
+
+        // Show Details
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Function to close the Details modal
+        // Close Details
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
