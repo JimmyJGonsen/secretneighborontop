@@ -326,107 +326,76 @@
             <label>Adjust Transparency:</label>
             <input type="range" min="0" max="1" step="0.1" value="1" onchange="adjustTransparency(this.value);">
         </div>
-        <label>Background Animation:</label>
-        <input type="checkbox" id="backgroundAnimation" onchange="toggleBackgroundAnimation();">
-        <label>Transition Animation:</label>
-        <input type="checkbox" id="transitionAnimation" onchange="toggleTransitionAnimation();">
     </div>
 
-    <!-- Details Modal -->
+    <!-- Modal -->
     <div class="modal" id="detailsModal">
         <div class="modal-content">
-            <h2>Details</h2>
-            <p>This is a cheat loader for BasilVerse. Enjoy the cheats!</p>
+            <h2>Cheat Loader Details</h2>
+            <p>This is a custom cheat loader for the BasilVerse platform. It supports various features including status reload, color changes, and animation toggles.</p>
             <button class="close-button" onclick="closeDetails();">Close</button>
         </div>
     </div>
 
+    <div class="scrolling-text">Welcome to BasilVerse - the ultimate cheat experience.</div>
+
     <script>
-        // Initialize particle effects
-        const particleContainer = document.getElementById('particles');
-        for (let i = 0; i < 100; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = `${Math.random() * window.innerWidth}px`;
-            particle.style.animationDelay = `${Math.random() * 2}s`;
-            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-            particleContainer.appendChild(particle);
-        }
+        // JavaScript Functions
+        let isSettingsMenuVisible = false;
+        let areAnimationsEnabled = true;
 
-        // Settings Menu Toggle
+        // Toggle the settings menu visibility
         function toggleSettingsMenu() {
-            const settingsMenu = document.querySelector('.settings-menu');
-            if (settingsMenu.style.display === 'none' || settingsMenu.style.display === '') {
-                settingsMenu.style.display = 'block';
-            } else {
-                settingsMenu.style.display = 'none';
-            }
+            isSettingsMenuVisible = !isSettingsMenuVisible;
+            document.querySelector('.settings-menu').style.display = isSettingsMenuVisible ? 'block' : 'none';
         }
 
-        // Reload Status Text
-        function reloadStatus() {
-            document.getElementById('status').textContent = "Status Loaded!";
+        // Toggle animations
+        function toggleAnimations() {
+            areAnimationsEnabled = !areAnimationsEnabled;
+            document.querySelector('.background-overlay').style.animationPlayState = areAnimationsEnabled ? 'running' : 'paused';
+            document.querySelector('.scrolling-text').style.animationPlayState = areAnimationsEnabled ? 'running' : 'paused';
         }
 
-        // Show Details Modal
+        // Show details modal
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Close Details Modal
+        // Close details modal
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
         }
 
-        // Apply color change
-        function openColorPicker() {
-            const rainbowBox = document.querySelector('.rainbow-box');
-            const colorCircle = document.querySelector('.color-circle');
-            rainbowBox.addEventListener('mousemove', function(event) {
-                const boxRect = rainbowBox.getBoundingClientRect();
-                const offsetX = event.clientX - boxRect.left;
-                colorCircle.style.left = `${offsetX}px`;
-                const color = `rgb(${(offsetX / rainbowBox.offsetWidth) * 255}, ${(1 - offsetX / rainbowBox.offsetWidth) * 255}, 0)`;
-                rainbowBox.style.backgroundColor = color;
-            });
+        // Reload status
+        function reloadStatus() {
+            document.getElementById('status').innerText = "Status reloaded successfully!";
         }
 
-        // Apply color to the background
+        // Apply new background color
         function applyColor() {
-            const newColor = document.querySelector('.rainbow-box').style.backgroundColor;
-            document.body.style.backgroundColor = newColor;
+            const color = document.getElementById('color-circle').style.backgroundColor;
+            document.body.style.backgroundColor = color;
         }
 
-        // Adjust transparency
+        // Adjust transparency of the background
         function adjustTransparency(value) {
             document.querySelector('.container').style.opacity = value;
         }
 
-        // Toggle background animation
-        function toggleBackgroundAnimation() {
-            if (document.getElementById('backgroundAnimation').checked) {
-                particleContainer.style.animationPlayState = 'running';
-            } else {
-                particleContainer.style.animationPlayState = 'paused';
+        // Particle Animation
+        function createParticles() {
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.getElementById('particles').appendChild(particle);
             }
         }
 
-        // Toggle transition animation
-        function toggleTransitionAnimation() {
-            if (document.getElementById('transitionAnimation').checked) {
-                document.querySelector('.container').style.animation = 'fadeIn 1s forwards';
-            } else {
-                document.querySelector('.container').style.animation = 'none';
-            }
-        }
-
-        // Page load transition
-        window.onload = function () {
-            document.querySelector('.container').style.animation = 'fadeIn 1s forwards';
-        }
+        // Initial call to create particles
+        createParticles();
     </script>
 </body>
 </html>
-
-
-
