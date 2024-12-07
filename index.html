@@ -3,123 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BasilVerse - Secret Neighbor</title>
+    <title>BasilVerse - Cheat Loader</title>
 
     <style>
-        /* Global styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #121212;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        /* Container for the content */
-        .container {
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            padding: 30px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background: #1e1e1e;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-            transition: transform 0.5s ease;
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-
-        /* Heading styles */
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            color: #00d4ff;
-            animation: fadeIn 1s ease-in-out forwards;
-        }
-
-        /* Status text */
-        p {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #bbb;
-            margin-bottom: 30px;
-            transition: color 0.3s ease;
-        }
-
-        /* IMGUI-like button style */
-        .button {
-            background: #0072ff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            color: #fff;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            margin: 10px;
-        }
-
-        .button:hover {
-            transform: scale(1.1);
-        }
-
-        /* Animation when the page loads */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Scroll animation */
-        @keyframes scrollAnimation {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Apply scroll animation */
-        .container.scrolled {
-            animation: scrollAnimation 1s ease-out forwards;
-        }
-
-        /* Loading animation */
-        .loading {
-            font-size: 1.5em;
-            color: #ffcb00;
-            margin: 10px 0;
-        }
-
-        /* Modal/Details Page styling */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BasilVerse - Secret Neighbor</title>
-
-    <style>
-        /* Global styles */
+        /* Global Styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -133,29 +20,30 @@
             transition: all 0.3s ease;
         }
 
+        /* Main container */
         .container {
             text-align: center;
             max-width: 600px;
             width: 100%;
             padding: 30px;
             border-radius: 10px;
-            background: rgba(30, 30, 30, 0.9);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-            transition: transform 0.5s ease, background 1s ease;
+            background: rgba(25, 25, 25, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
             opacity: 0;
             transform: translateY(-30px);
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
-        /* Heading styles */
+        /* Title */
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
-            letter-spacing: 2px;
             color: #00d4ff;
-            animation: fadeIn 1s ease-in-out forwards;
+            letter-spacing: 1px;
+            margin-top: 0;
         }
 
-        /* Status text */
+        /* Status Text */
         p {
             font-size: 1.3em;
             font-weight: bold;
@@ -171,15 +59,15 @@
             font-size: 1.1em;
             color: #fff;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
             margin: 10px;
+            transition: transform 0.2s ease-in-out;
         }
 
         .button:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
-        /* Settings Icon and Menu */
+        /* Settings Icon */
         .settings-icon {
             position: absolute;
             top: 20px;
@@ -188,24 +76,26 @@
             height: 40px;
             background-color: #ff7f50;
             border-radius: 50%;
-            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
             color: #fff;
             font-size: 1.5em;
         }
 
+        /* Settings Menu */
         .settings-menu {
             position: absolute;
             top: 70px;
             right: 20px;
             width: 250px;
-            background: rgba(30, 30, 30, 0.9);
+            background: rgba(25, 25, 25, 0.9);
             padding: 15px;
             border-radius: 10px;
             display: none;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease-in-out;
         }
 
         .settings-menu input[type="range"] {
@@ -228,7 +118,7 @@
         }
 
         .apply-button {
-            background: #008c00;
+            background: #0072ff;
             padding: 10px;
             border-radius: 5px;
             color: #fff;
@@ -238,9 +128,10 @@
         }
 
         .apply-button:hover {
-            background: #006400;
+            background: #0058c7;
         }
 
+        /* Animation options */
         .animation-options {
             margin-top: 15px;
             display: flex;
@@ -251,12 +142,6 @@
         .animation-options label {
             font-size: 1.1em;
             color: #fff;
-        }
-
-        .loading {
-            font-size: 1.5em;
-            color: #ffcb00;
-            margin: 10px 0;
         }
 
         /* Modal for details */
@@ -308,7 +193,7 @@
             background: #ff3333;
         }
 
-        /* Animations */
+        /* Smooth fade-in animation */
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -319,7 +204,6 @@
                 transform: translateY(0);
             }
         }
-
     </style>
 </head>
 <body>
@@ -386,31 +270,30 @@
             menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
         }
 
-        // Adjust Transparency
-        function adjustTransparency(value) {
-            const container = document.querySelector('.container');
-            container.style.opacity = value;
-        }
-
-        // Apply Color
-        function openColorPicker() {
-            alert('Drag the circle on the rainbow box to select a color!');
-        }
-
+        // Apply color change
         function applyColor() {
-            const colorBox = document.querySelector('.rainbow-box');
-            const container = document.querySelector('.container');
-            container.style.backgroundColor = colorBox.style.backgroundColor || 'black'; // Sample
+            const newColor = document.querySelector('.rainbow-box').style.backgroundColor;
+            document.body.style.backgroundColor = newColor;
         }
 
-        // Show Details
+        // Adjust transparency
+        function adjustTransparency(value) {
+            document.querySelector('.container').style.opacity = value;
+        }
+
+        // Show details modal
         function showDetails() {
             document.getElementById('detailsModal').style.display = 'flex';
         }
 
-        // Close Details
+        // Close details modal
         function closeDetails() {
             document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // Make sure page elements animate in on load
+        window.onload = function () {
+            document.querySelector('.container').style.animation = 'fadeIn 1s forwards';
         }
     </script>
 </body>
