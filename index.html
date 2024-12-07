@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BasilVerse - Cheat Loader</title>
-
     <style>
         /* Global Styles */
         body {
@@ -15,9 +14,9 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #121212;
             overflow: hidden;
-            transition: all 0.3s ease;
+            background-color: #1d1d1d;
+            position: relative;
         }
 
         /* Main container */
@@ -27,11 +26,12 @@
             width: 100%;
             padding: 30px;
             border-radius: 10px;
-            background: rgba(25, 25, 25, 0.9);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+            background: rgba(20, 20, 20, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
             opacity: 0;
             transform: translateY(-30px);
             transition: transform 0.5s ease, opacity 0.5s ease;
+            z-index: 10;
         }
 
         /* Title */
@@ -96,6 +96,7 @@
             display: none;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
             transition: all 0.3s ease-in-out;
+            z-index: 20;
         }
 
         .settings-menu input[type="range"] {
@@ -114,6 +115,19 @@
             height: 30px;
             background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
             border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .color-circle {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
             cursor: pointer;
         }
 
@@ -142,6 +156,25 @@
         .animation-options label {
             font-size: 1.1em;
             color: #fff;
+        }
+
+        /* Particle Animation */
+        .particle {
+            position: absolute;
+            top: -10px;
+            background-color: white;
+            width: 2px;
+            height: 10px;
+            animation: fall 5s infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
         }
 
         /* Modal for details */
@@ -207,6 +240,9 @@
     </style>
 </head>
 <body>
+    <!-- Background Particles -->
+    <div id="particles"></div>
+
     <div class="container">
         <h1>BasilVerse - Secret Neighbor</h1>
         <p id="status">Checking...</p>
@@ -220,7 +256,9 @@
     <!-- Settings Menu -->
     <div class="settings-menu">
         <div class="color-picker">
-            <div class="rainbow-box" onclick="openColorPicker();"></div>
+            <div class="rainbow-box" onclick="openColorPicker();">
+                <div class="color-circle" id="color-circle"></div>
+            </div>
             <button class="apply-button" onclick="applyColor();">Apply Color</button>
         </div>
 
@@ -239,7 +277,7 @@
     <div id="detailsModal" class="modal">
         <div class="modal-content">
             <h2>Welcome To JimmyVerse SN</h2>
-            <p>JimmyVerse is the newest and probably most usable one out there next to Harley Sulivan. It is worth the money and doesn't take down and knock of performance like other hacks.</p>
+            <p>JimmyVerse is the newest and probably most usable one out there next to Harley Sulivan. It is worth the money and doesn't take down and knock off performance like other hacks.</p>
             <p>If servers are down and launching doesn't work, it might be a database error or hack revamp.</p>
             <p><strong>Love from Basil (aka Jimmy Gonsen)</strong></p>
             <button class="close-button" onclick="closeDetails();">Close</button>
@@ -247,30 +285,36 @@
     </div>
 
     <script>
-        // Check server status
-        fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.content) {
-                    const decodedContent = atob(data.content);
-                    const status = JSON.parse(decodedContent);
-                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
-                    document.getElementById('status').textContent = statusText;
-                    document.querySelector('.container').classList.add('scrolled');
-                }
-            })
-            .catch(() => {
-                document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
-                document.querySelector('.container').classList.add('scrolled');
-            });
+        // Particle Animation
+        const particleContainer = document.getElementById('particles');
+        const numParticles = 50;
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${Math.random() * 100}%`;
+            particleContainer.appendChild(particle);
+        }
 
         // Toggle settings menu
         function toggleSettingsMenu() {
-            const menu = document.querySelector('.settings-menu');
-            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+            const settingsMenu = document.querySelector('.settings-menu');
+            settingsMenu.style.display = settingsMenu.style.display === 'none' || settingsMenu.style.display === '' ? 'block' : 'none';
         }
 
         // Apply color change
+        function openColorPicker() {
+            const rainbowBox = document.querySelector('.rainbow-box');
+            const colorCircle = document.querySelector('.color-circle');
+            rainbowBox.addEventListener('mousemove', function(event) {
+                const boxRect = rainbowBox.getBoundingClientRect();
+                const offsetX = event.clientX - boxRect.left;
+                colorCircle.style.left = `${offsetX}px`;
+                const color = `rgb(${(offsetX / rainbowBox.offsetWidth) * 255}, ${(1 - offsetX / rainbowBox.offsetWidth) * 255}, 0)`;
+                rainbowBox.style.backgroundColor = color;
+            });
+        }
+
+        // Apply color to the background
         function applyColor() {
             const newColor = document.querySelector('.rainbow-box').style.backgroundColor;
             document.body.style.backgroundColor = newColor;
@@ -291,7 +335,7 @@
             document.getElementById('detailsModal').style.display = 'none';
         }
 
-        // Make sure page elements animate in on load
+        // Page transition animations
         window.onload = function () {
             document.querySelector('.container').style.animation = 'fadeIn 1s forwards';
         }
