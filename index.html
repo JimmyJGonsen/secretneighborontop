@@ -9,10 +9,10 @@
         /* Global styles */
         body {
             font-family: 'Arial', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
             margin: 0;
             padding: 0;
+            background: #121212;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,7 +20,6 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
-
         /* Container for the content */
         .container {
             text-align: center;
@@ -36,38 +35,37 @@
 
         /* Heading styles */
         h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #00ff96;
             letter-spacing: 1px;
-            color: #00d4ff;
         }
 
         /* Status text */
-        p {
+        p p {
             font-size: 1.2em;
-            font-weight: bold;
+            margin: 10px 0;
             color: #bbb;
-            margin-bottom: 20px;
-            transition: color 0.3s ease;
         }
 
         /* IMGUI-like button style */
-        .button {
+         .button {
             background: #0072ff;
             border: none;
-            padding: 12px 24px;
+            padding: 15px 25px;
             border-radius: 5px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: #fff;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease-in-out;
-            margin: 10px;
+            transition: all 0.2s ease;
+            margin: 15px;
         }
 
-        .button:hover {
-            background: #0066cc;
+         .button:hover {
+            background: #0057b8;
             transform: scale(1.05);
         }
+
 
         /* Animation for modal fade */
         @keyframes modalFade {
