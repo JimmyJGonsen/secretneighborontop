@@ -21,6 +21,49 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
+     .sidebar {
+            width: 250px;
+            height: 100%;
+            background: rgba(18, 18, 18, 0.95);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8);
+            position: fixed;
+            left: -250px;
+            top: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .sidebar .menu li {
+            margin: 15px 0;
+        }
+
+        .sidebar .menu li button {
+            width: 90%;
+            padding: 15px;
+            background: #0072ff;
+            border: none;
+            color: #fff;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.3s ease;
+            margin: auto;
+        }
+
+        .sidebar .menu li button:hover {
+            background: #0057b8;
+        }
 
         /* Container for the content */
         .container {
@@ -34,7 +77,98 @@
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
             transition: transform 0.3s ease;
         }
+    .reviews-section {
+            display: none;
+            text-align: left;
+            max-width: 600px;
+            margin: auto;
+            background: rgba(28, 28, 28, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+        }
 
+        .reviews-section.active {
+            display: block;
+        }
+
+        .reviews-section h2 {
+            color: #00ff96;
+            font-size: 1.8em;
+            text-shadow: 0 0 5px #00ff96;
+            margin-bottom: 20px;
+        }
+
+        .reviews-list {
+            margin: 20px 0;
+        }
+
+        .review-item {
+            background: rgba(18, 18, 18, 0.95);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .review-item .username {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #00ff96;
+        }
+
+        .review-item .stars {
+            color: gold;
+        }
+
+        /* Review form */
+        .review-form {
+            margin-top: 20px;
+        }
+
+        .review-form input,
+        .review-form textarea,
+        .review-form select,
+        .review-form button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .review-form textarea {
+            height: 80px;
+        }
+
+        .review-form button {
+            background: #0072ff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .review-form button:hover {
+            background: #0057b8;
+        }
+
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #0072ff;
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: #0057b8;
+        }
         /* Heading styles */
         h1 {
             font-size: 2.8em;
@@ -188,16 +322,43 @@
     </style>
 </head>
 <body>
+       <div class="sidebar" id="sidebar">
+        <ul class="menu">
+            <li><button onclick="toggleReviews()">Reviews</button></li>
+        </ul>
+    </div>
+    
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    
     <div class="container">
         <h1>BasilVerse - Secret Neighbor</h1>
         <p id="status">Checking...</p>
         <button class="button" onclick="location.reload();">Reload Status</button>
         <button class="button" onclick="showDetails();">Details</button>
     </div>
-
+    <!-- Reviews Section -->
+    <div class="reviews-section" id="reviewsSection">
+        <h2>Reviews</h2>
+        <div class="reviews-list" id="reviewsList">
+            <!-- Reviews will be dynamically added here -->
+        </div>
+        <div class="review-form">
+            <input type="text" id="reviewUsername" placeholder="Your Username">
+            <select id="reviewStars">
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+            <textarea id="reviewText" placeholder="Your Review"></textarea>
+            <button onclick="addReview()">Submit Review</button>
+        </div>
+    </div>
+    
     <!-- VIP Button -->
     <button class="vip-button" onclick="showVIP();">
-        <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Crown Icon">
+        <img src="" alt="Crown Icon">
         VIP
     </button>
 
@@ -215,7 +376,44 @@
         </div>
     </div>
 
-    <script>
+            <script>
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+                        function toggleReviews() {
+            const reviewsSection = document.getElementById('reviewsSection');
+            reviewsSection.classList.toggle('active');
+        }
+                        function addReview() {
+            const username = document.getElementById('reviewUsername').value;
+            const stars = document.getElementById('reviewStars').value;
+            const reviewText = document.getElementById('reviewText').value;
+
+            if (username && reviewText) {
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                reviewItem.innerHTML = `
+                    <div class="username">${username}</div>
+                    <div class="stars">${'⭐'.repeat(stars)}</div>
+                    <p>${reviewText}</p>
+                `;
+
+                document.getElementById('reviewsList').appendChild(reviewItem);
+
+                // Clear the form
+                document.getElementById('reviewUsername').value = '';
+                document.getElementById('reviewStars').value = '1';
+                document.getElementById('reviewText').value = '';
+            } else {
+                alert('Please fill out all fields.');
+            }
+        
+
+
+                
+                
         // Function to show VIP modal
         function showVIP() {
             document.getElementById('vipModal').style.display = 'flex';
@@ -243,12 +441,12 @@
                 if (data && data.content) {
                     const decodedContent = atob(data.content);
                     const status = JSON.parse(decodedContent);
-                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down.';
+                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down. Well Be back Soon';
                     document.getElementById('status').textContent = statusText;
                 }
             })
             .catch(() => {
-                document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
+                document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down. Come Back later';
             });
     </script>
 </body>
