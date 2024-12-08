@@ -386,68 +386,88 @@
             const reviewsSection = document.getElementById('reviewsSection');
             reviewsSection.classList.toggle('active');
         }
-                        function addReview() {
-            const username = document.getElementById('reviewUsername').value;
-            const stars = document.getElementById('reviewStars').value;
-            const reviewText = document.getElementById('reviewText').value;
+                
+function addReview() {
+    const username = document.getElementById('reviewUsername').value.trim();
+    const stars = parseInt(document.getElementById('reviewStars').value, 10);
+    const reviewText = document.getElementById('reviewText').value.trim();
 
-            if (username && reviewText) {
-                const reviewItem = document.createElement('div');
-                reviewItem.className = 'review-item';
-                reviewItem.innerHTML = `
-                    <div class="username">${username}</div>
-                    <div class="stars">${'⭐'.repeat(stars)}</div>
-                    <p>${reviewText}</p>
-                `;
+    if (!username) {
+        alert('Please enter your username.');
+        return;
+    }
 
-                document.getElementById('reviewsList').appendChild(reviewItem);
+    if (!reviewText) {
+        alert('Please write a review.');
+        return;
+    }
 
-                // Clear the form
-                document.getElementById('reviewUsername').value = '';
-                document.getElementById('reviewStars').value = '1';
-                document.getElementById('reviewText').value = '';
-            } else {
-                alert('Please fill out all fields.');
+    const reviewItem = document.createElement('div');
+    reviewItem.className = 'review-item';
+
+    const usernameElement = document.createElement('p');
+    usernameElement.className = 'username';
+    usernameElement.textContent = username;
+    reviewItem.appendChild(usernameElement);
+
+    const starsElement = document.createElement('p');
+    starsElement.className = 'stars';
+    starsElement.textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+    reviewItem.appendChild(starsElement);
+
+    const reviewTextElement = document.createElement('p');
+    reviewTextElement.textContent = reviewText;
+    reviewItem.appendChild(reviewTextElement);
+
+    const reviewsList = document.getElementById('reviewsList');
+    reviewsList.appendChild(reviewItem);
+
+    document.getElementById('reviewUsername').value = '';
+    document.getElementById('reviewStars').value = '1';
+    document.getElementById('reviewText').value = '';
+
+    alert('Thank you for your review!');
+}
+
+function showVIP() {
+    const vipModal = document.getElementById('vipModal');
+    if (vipModal) vipModal.style.display = 'flex';
+}
+
+function closeVIP() {
+    const vipModal = document.getElementById('vipModal');
+    if (vipModal) vipModal.style.display = 'none';
+}
+
+function showDetails() {
+    alert("Details feature is not implemented yet.");
+}
+
+function closeDetails() {
+    const detailsModal = document.getElementById('detailsModal');
+    if (detailsModal) detailsModal.style.display = 'none';
+}
+
+fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
+    .then(response => response.json())
+    .then(data => {
+        if (data && data.content) {
+            try {
+                const decodedContent = atob(data.content);
+                const status = JSON.parse(decodedContent);
+                const statusText = status.status === 'up'
+                    ? 'JimmyVerse Servers are up!'
+                    : 'Error, JimmyVerse Servers are down. We\'ll be back soon!';
+                document.getElementById('status').textContent = statusText;
+            } catch {
+                document.getElementById('status').textContent = 'Error, failed to parse server status.';
             }
-        
-
-
-                
-                
-        // Function to show VIP modal
-        function showVIP() {
-            document.getElementById('vipModal').style.display = 'flex';
         }
+    })
+    .catch(() => {
+        document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down. Come back later.';
+    });
 
-        // Function to close VIP modal
-        function closeVIP() {
-            document.getElementById('vipModal').style.display = 'none';
-        }
-
-        // Function to show Details modal
-        function showDetails() {
-            document.getElementById('detailsModal').style.display = 'flex';
-        }
-
-        // Function to close Details modal
-        function closeDetails() {
-            document.getElementById('detailsModal').style.display = 'none';
-        }
-
-        // Fetch server status
-        fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.content) {
-                    const decodedContent = atob(data.content);
-                    const status = JSON.parse(decodedContent);
-                    const statusText = status.status === 'up' ? 'JimmyVerse Servers are up!' : 'Error, JimmyVerse Servers are down. Well Be back Soon';
-                    document.getElementById('status').textContent = statusText;
-                }
-            })
-            .catch(() => {
-                document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down. Come Back later';
-            });
     </script>
 </body>
 </html>
