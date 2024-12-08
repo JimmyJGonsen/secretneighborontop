@@ -19,7 +19,7 @@
             height: 100vh;
             overflow: hidden;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px); /* Blur the background for that sleek look */
+            backdrop-filter: blur(10px);
         }
 
         /* Container for the content */
@@ -64,7 +64,6 @@
             transition: all 0.2s ease;
             margin: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px); /* Added blur effect to buttons */
         }
 
         .button:hover {
@@ -73,20 +72,38 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
-        /* Animated background transition for modal */
-        @keyframes modalFade {
-            0% {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* VIP Button */
+        .vip-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(to right, #ffcc00, #ff9900);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 153, 0, 0.6);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Modal Styling */
-        .modal {
+        .vip-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .vip-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 153, 0, 0.9);
+        }
+
+        /* VIP Modal */
+        .vip-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -96,49 +113,78 @@
             display: none;
             justify-content: center;
             align-items: center;
-            animation: modalFade 0.5s ease-out forwards;
         }
 
-        .modal-content {
+        .vip-modal-content {
             background: rgba(34, 34, 34, 0.95);
             color: #fff;
             padding: 25px;
             border-radius: 15px;
-            width: 80%;
-            max-width: 550px;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
         }
 
-        .modal-content h2 {
-            margin-bottom: 15px;
-            color: #00d4ff;
+        .vip-modal-content h2 {
+            color: gold;
             font-size: 1.8em;
             font-weight: bold;
-            text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff;
+            text-shadow: 0 0 5px gold, 0 0 10px gold;
         }
 
-        .modal-content p {
-            color: #bbb;
+        .vip-modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .vip-modal-content ul li {
             font-size: 1.2em;
-            margin-bottom: 20px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
         }
 
-        .close-button {
+        .vip-modal-content ul li img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .vip-modal-content .vip-action-button {
+            background: gold;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #000;
+        }
+
+        .vip-modal-content .vip-action-button:hover {
+            background: #ffd700;
+        }
+
+        .vip-modal-content .close-button {
+            margin-top: 20px;
             background: #ff4444;
             border: none;
-            padding: 12px 25px;
-            font-size: 1.1em;
+            padding: 10px 20px;
+            font-size: 1em;
             color: #fff;
             cursor: pointer;
             border-radius: 8px;
             transition: background 0.3s ease;
         }
 
-        .close-button:hover {
+        .vip-modal-content .close-button:hover {
             background: #ff3333;
         }
-
     </style>
 </head>
 <body>
@@ -149,19 +195,48 @@
         <button class="button" onclick="showDetails();">Details</button>
     </div>
 
-    <!-- Modal for details -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <h2>Welcome to JimmyVerse SN</h2>
-            <p>JimmyVerse is the newest and most usable cheat loader out there, designed for performance and reliability.</p>
-            <p>If the servers are down, it could be due to a database issue or a revamp of the hack.</p>
-            <p><strong>Love from Basil (aka Jimmy Gonsen)</strong></p>
-            <button class="close-button" onclick="closeDetails();">Close</button>
+    <!-- VIP Button -->
+    <button class="vip-button" onclick="showVIP();">
+        <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Crown Icon">
+        VIP
+    </button>
+
+    <!-- VIP Modal -->
+    <div id="vipModal" class="vip-modal">
+        <div class="vip-modal-content">
+            <h2>Our VIP Members</h2>
+            <ul>
+                <li><img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Crown Icon"> DarkoGalaxy</li>
+                <li><img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Crown Icon"> Panda</li>
+                <li><img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Crown Icon"> Harley Sulivan</li>
+            </ul>
+            <button class="vip-action-button" onclick="window.open('https://www.paypal.com/paypalme/jimmygonsen', '_blank')">Become VIP Today</button>
+            <button class="close-button" onclick="closeVIP();">Close</button>
         </div>
     </div>
 
     <script>
-        // Check server status
+        // Function to show VIP modal
+        function showVIP() {
+            document.getElementById('vipModal').style.display = 'flex';
+        }
+
+        // Function to close VIP modal
+        function closeVIP() {
+            document.getElementById('vipModal').style.display = 'none';
+        }
+
+        // Function to show Details modal
+        function showDetails() {
+            document.getElementById('detailsModal').style.display = 'flex';
+        }
+
+        // Function to close Details modal
+        function closeDetails() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // Fetch server status
         fetch('https://api.github.com/repos/JimmyJGonsen/secretneighborontop/contents/status.json')
             .then(response => response.json())
             .then(data => {
@@ -175,18 +250,6 @@
             .catch(() => {
                 document.getElementById('status').textContent = 'Error, JimmyVerse Servers are down.';
             });
-
-        // Function to show the Details modal
-        function showDetails() {
-            document.getElementById('detailsModal').style.display = 'flex';
-        }
-
-        // Function to close the Details modal
-        function closeDetails() {
-            document.getElementById('detailsModal').style.display = 'none';
-        }
     </script>
 </body>
 </html>
-
-
