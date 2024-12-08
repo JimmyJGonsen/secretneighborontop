@@ -439,9 +439,18 @@ function closeVIP() {
     if (vipModal) vipModal.style.display = 'none';
 }
 
+// Show the Details modal
 function showDetails() {
-    alert("Details feature is not implemented yet.");
+    const detailsModal = document.getElementById('detailsModal');
+    detailsModal.style.display = 'flex';
 }
+
+// Close the Details modal
+function closeDetails() {
+    const detailsModal = document.getElementById('detailsModal');
+    detailsModal.style.display = 'none';
+}
+
 
 function closeDetails() {
     const detailsModal = document.getElementById('detailsModal');
